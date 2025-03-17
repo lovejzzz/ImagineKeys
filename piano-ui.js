@@ -910,24 +910,31 @@ class PianoUI {
         const legWidth = width * 0.03;
         const legColor = 'rgba(0, 0, 0, 0.7)';
         
+        // Calculate leg height based on the piano height parameter
+        // This makes legs taller when the piano height increases
+        const heightFactor = this.pianoParams.height / 40; // 40 is the default height
+        const legHeightMultiplier = Math.max(0.8, Math.min(1.8, heightFactor));
+        
         ctx.fillStyle = legColor;
         
         if (pianoType === 'grand') {
             // Three legs for grand piano
+            const standardLegHeight = height * 0.15;
+            const adjustedLegHeight = standardLegHeight * legHeightMultiplier;
             
-            // Front-right leg
+            // Front-right leg - height adjusts with piano height parameter
             ctx.beginPath();
-            ctx.rect(right - legWidth - width * 0.1, bottom - height * 0.05, legWidth, height * 0.15);
+            ctx.rect(right - legWidth - width * 0.1, bottom - height * 0.05, legWidth, adjustedLegHeight);
             ctx.fill();
             
-            // Front-left leg
+            // Front-left leg - height adjusts with piano height parameter
             ctx.beginPath();
-            ctx.rect(left + width * 0.1, bottom - height * 0.05, legWidth, height * 0.15);
+            ctx.rect(left + width * 0.1, bottom - height * 0.05, legWidth, adjustedLegHeight);
             ctx.fill();
             
-            // Back leg (centered along curve)
+            // Back leg (centered along curve) - height adjusts with piano height parameter
             ctx.beginPath();
-            ctx.rect(left + width * 0.4, top + height * 0.15, legWidth, height * 0.15);
+            ctx.rect(left + width * 0.4, top + height * 0.15, legWidth, adjustedLegHeight);
             ctx.fill();
             
             // Add foot detail to each leg
@@ -935,31 +942,54 @@ class PianoUI {
             
             // Front-right foot
             ctx.beginPath();
-            ctx.rect(right - legWidth - width * 0.1 - 5, bottom + height * 0.1 - 5, legWidth + 10, 5);
+            ctx.rect(right - legWidth - width * 0.1 - 5, bottom - height * 0.05 + adjustedLegHeight - 5, legWidth + 10, 5);
             ctx.fill();
             
             // Front-left foot
             ctx.beginPath();
-            ctx.rect(left + width * 0.1 - 5, bottom + height * 0.1 - 5, legWidth + 10, 5);
+            ctx.rect(left + width * 0.1 - 5, bottom - height * 0.05 + adjustedLegHeight - 5, legWidth + 10, 5);
             ctx.fill();
             
             // Back foot
             ctx.beginPath();
-            ctx.rect(left + width * 0.4 - 5, top + height * 0.3 - 5, legWidth + 10, 5);
+            ctx.rect(left + width * 0.4 - 5, top + height * 0.15 + adjustedLegHeight - 5, legWidth + 10, 5);
             ctx.fill();
+            
+            // Draw leg ornamental details for taller legs
+            if (legHeightMultiplier > 1.2) {
+                // Add decorative carvings on legs
+                const ornamentColor = 'rgba(0, 0, 0, 0.85)';
+                ctx.fillStyle = ornamentColor;
+                
+                // Right leg ornament
+                const rightLegX = right - legWidth - width * 0.1;
+                const rightLegY = bottom - height * 0.05;
+                this.drawLegOrnament(ctx, rightLegX, rightLegY, legWidth, adjustedLegHeight);
+                
+                // Left leg ornament
+                const leftLegX = left + width * 0.1;
+                const leftLegY = bottom - height * 0.05;
+                this.drawLegOrnament(ctx, leftLegX, leftLegY, legWidth, adjustedLegHeight);
+                
+                // Back leg ornament
+                const backLegX = left + width * 0.4;
+                const backLegY = top + height * 0.15;
+                this.drawLegOrnament(ctx, backLegX, backLegY, legWidth, adjustedLegHeight);
+            }
             
         } else {
             // Two legs for upright piano
-            const legHeight = height * 0.1;
+            const standardLegHeight = height * 0.1;
+            const adjustedLegHeight = standardLegHeight * legHeightMultiplier;
             
-            // Left leg
+            // Left leg - height adjusts with piano height parameter
             ctx.beginPath();
-            ctx.rect(left + width * 0.15, bottom, legWidth, legHeight);
+            ctx.rect(left + width * 0.15, bottom, legWidth, adjustedLegHeight);
             ctx.fill();
             
-            // Right leg
+            // Right leg - height adjusts with piano height parameter
             ctx.beginPath();
-            ctx.rect(right - width * 0.15 - legWidth, bottom, legWidth, legHeight);
+            ctx.rect(right - width * 0.15 - legWidth, bottom, legWidth, adjustedLegHeight);
             ctx.fill();
             
             // Add foot detail
@@ -967,14 +997,81 @@ class PianoUI {
             
             // Left foot
             ctx.beginPath();
-            ctx.rect(left + width * 0.15 - 5, bottom + legHeight - 5, legWidth + 10, 5);
+            ctx.rect(left + width * 0.15 - 5, bottom + adjustedLegHeight - 5, legWidth + 10, 5);
             ctx.fill();
             
             // Right foot
             ctx.beginPath();
-            ctx.rect(right - width * 0.15 - legWidth - 5, bottom + legHeight - 5, legWidth + 10, 5);
+            ctx.rect(right - width * 0.15 - legWidth - 5, bottom + adjustedLegHeight - 5, legWidth + 10, 5);
+            ctx.fill();
+            
+            // Add leg ornaments for taller legs
+            if (legHeightMultiplier > 1.2) {
+                const ornamentColor = 'rgba(0, 0, 0, 0.85)';
+                ctx.fillStyle = ornamentColor;
+                
+                // Left leg ornament
+                const leftLegX = left + width * 0.15;
+                const leftLegY = bottom;
+                this.drawLegOrnament(ctx, leftLegX, leftLegY, legWidth, adjustedLegHeight);
+                
+                // Right leg ornament
+                const rightLegX = right - width * 0.15 - legWidth;
+                const rightLegY = bottom;
+                this.drawLegOrnament(ctx, rightLegX, rightLegY, legWidth, adjustedLegHeight);
+            }
+        }
+    }
+    
+    /**
+     * Draw leg ornamental details
+     */
+    drawLegOrnament(ctx, legX, legY, legWidth, legHeight) {
+        // Position ornaments at top and bottom of leg
+        const topOrnamentY = legY + legHeight * 0.2;
+        const bottomOrnamentY = legY + legHeight * 0.7;
+        
+        // Save current context
+        ctx.save();
+        
+        // Top ornament (ring around leg)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.fillRect(legX - 2, topOrnamentY, legWidth + 4, 3);
+        
+        // Bottom ornament (ring around leg)
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.fillRect(legX - 2, bottomOrnamentY, legWidth + 4, 3);
+        
+        // Add carved detail in middle for taller legs
+        if (legHeight > 30) {
+            ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
+            
+            // Central ornament for taller legs
+            const middleOrnamentY = legY + legHeight * 0.45;
+            
+            // Create a small decorative carving
+            ctx.beginPath();
+            ctx.moveTo(legX - 1, middleOrnamentY);
+            ctx.lineTo(legX + legWidth + 1, middleOrnamentY);
+            ctx.lineTo(legX + legWidth + 1, middleOrnamentY + 8);
+            ctx.lineTo(legX + legWidth/2, middleOrnamentY + 12);
+            ctx.lineTo(legX - 1, middleOrnamentY + 8);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Add highlight to carving
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.beginPath();
+            ctx.moveTo(legX, middleOrnamentY + 1);
+            ctx.lineTo(legX + legWidth, middleOrnamentY + 1);
+            ctx.lineTo(legX + legWidth - 2, middleOrnamentY + 3);
+            ctx.lineTo(legX + 2, middleOrnamentY + 3);
+            ctx.closePath();
             ctx.fill();
         }
+        
+        // Restore context
+        ctx.restore();
     }
     
     /**
