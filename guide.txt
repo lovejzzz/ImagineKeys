@@ -1,0 +1,144 @@
+Physical Modeling Piano-Building Game: Simplified Design and Development Guidance
+
+Overview
+
+The game is an interactive, web-based grand piano-building simulator focused on simplicity and ease of use. Players visually resize a minimalistic piano silhouette by dragging edges or corners, select the material type, click "Build," and immediately play their customized piano via an on-screen keyboard or MIDI keyboard.
+
+Technical Stack
+
+Platform: HTML5, CSS3, JavaScript, HTML5 Canvas
+
+APIs: Web Audio API (simplified physical modeling), Web MIDI API
+
+Simplified Gameplay Flow
+
+Customization Phase:
+
+Users resize the grand piano silhouette visually, changing length, width, and height.
+
+Select piano body material from a simple dropdown or toggle.
+
+Building Phase:
+
+Clicking the "Build" button applies dimension and material changes to update the audio synthesis model.
+
+Performance Phase:
+
+Users play the resulting piano sound via virtual keys or connected MIDI device.
+
+Simplified Parameter Design and Mapping
+
+Piano Dimensions
+
+Length: Directly affects string length, influencing pitch, timbre, and sustain.
+
+Longer length → richer bass, fuller tone.
+
+Shorter length → brighter, lighter tone.
+
+Width: Controls the soundboard size, impacting resonance and loudness.
+
+Wider piano → increased resonance and louder volume.
+
+Narrower piano → quieter, less resonant sound.
+
+Height (Body Depth): Alters internal acoustic space, affecting sustain and tone depth.
+
+Taller piano → increased resonance, longer sustain.
+
+Shorter piano → focused, clearer sound, shorter sustain.
+
+Piano Material
+
+Wood: Warm, traditional, rich resonance.
+
+Metal: Bright, metallic tone, prominent overtones.
+
+Composite/Plastic: Clear, controlled resonance, modern and balanced.
+
+UI & Visual Design
+
+Visual Style: 2D minimalistic with monochrome palette and subtle accents.
+
+Interaction:
+
+Draggable corners or edges of a simplified grand piano silhouette.
+
+Minimal dropdown or toggle for selecting material.
+
+UI Components:
+
+Resizable Piano Silhouette: Clearly marked edges or dots indicating draggable points.
+
+Material Selector: Simple, visually appealing dropdown menu or toggle.
+
+Build Button: Prominent, centralized, and easy to access.
+
+Interactive Piano Keys: Minimalistic keyboard at bottom for immediate audio testing.
+
+Technical Considerations (Thinking Process)
+
+Mapping Visual to Audio Parameters
+
+Normalize piano silhouette dimensions (canvas coordinates) into audio parameters.
+
+Length → adjusts fundamental frequency (pitch), sustain, and decay envelope.
+
+Width/Height → affects resonance via convolution reverb or EQ.
+
+Material → changes EQ profile or convolution impulse responses.
+
+Simplified Physical Modeling Synthesis
+
+Hammer Strike: Noise burst modulated by an envelope.
+
+String Vibration: Simplified Karplus-Strong model (noise burst → delay line → feedback), adjusted by length.
+
+Soundboard Resonance: Use convolution reverb with impulse responses matching dimensions and materials.
+
+Audio Node Graph (Simplified):
+
+Noise Burst → Envelope (hammer) → Karplus-Strong Delay Line (string length) → EQ/Filter (material) → Convolution Reverb (body resonance) → Output
+
+Real-time Interaction and Performance
+
+Provide immediate numeric feedback visually while resizing.
+
+Debounce or throttle audio updates to maintain performance.
+
+Web MIDI API Integration
+
+Detect connected MIDI devices at startup.
+
+Map MIDI notes to trigger the generated piano sounds.
+
+Provide on-screen interactive keys as a fallback.
+
+Error Handling and Educational Aspect
+
+Allow all dimension combinations for experimentation.
+
+Optional educational pop-up or tooltips explaining acoustic impacts.
+
+Optimization and Testing
+
+Cross-browser testing for Web Audio and MIDI compatibility.
+
+Optimize UI responsiveness and audio synthesis performance.
+
+Final Development Steps (Summary)
+
+Set up HTML/CSS/Canvas UI.
+
+Implement intuitive dragging to resize piano silhouette.
+
+Map visual changes directly to simplified audio parameters.
+
+Develop simplified physical modeling synthesis with Web Audio.
+
+Integrate Web MIDI and interactive keys.
+
+Optimize performance and provide responsive visual/audio feedback.
+
+This simplified design aims for an engaging, intuitive, and educational user experience, allowing easy experimentation with piano acoustics.
+

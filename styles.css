@@ -1,0 +1,276 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Playfair Display', 'Garamond', 'Times New Roman', serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+    background-image: linear-gradient(to bottom right, #f9f9f9, #f0f0f0);
+    min-height: 100vh;
+}
+
+/* Import elegant fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 5px;
+    color: #222;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #666;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+/* Design Panel */
+.design-panel {
+    background-color: transparent;
+    padding: 15px;
+    margin-bottom: 25px;
+}
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin: 20px 0;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(to right, #4CAF50, #8BC34A);
+    border-radius: 10px;
+    transition: width 0.1s ease;
+}
+
+.canvas-container {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    background-color: rgba(250, 250, 250, 0.5);
+}
+
+#pianoCanvas {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.dimensions-display {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 12px 15px;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(5px);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.material-selector {
+    margin-bottom: 15px;
+}
+
+.material-selector label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.material-selector select {
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    width: 250px;
+    font-family: 'Playfair Display', serif;
+    transition: all 0.3s ease;
+}
+
+.material-selector select:focus {
+    outline: none;
+    border-color: #3a86ff;
+    box-shadow: 0 0 0 2px rgba(58, 134, 255, 0.2);
+}
+
+.build-button {
+    background-color: #3a86ff;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 10px rgba(58, 134, 255, 0.2);
+}
+
+.build-button:hover {
+    background-color: #2a75e8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+}
+
+/* Piano Keyboard */
+.piano-container {
+    padding: 15px 0;
+    margin-bottom: 15px;
+}
+
+#keyboard {
+    position: relative;
+    height: 200px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 840px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #1a252f, #2c3e50);
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.piano-key {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.piano-key.white {
+    width: 6.66%;
+    height: 100%;
+    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+    border: 1px solid #ddd;
+    border-radius: 0 0 5px 5px;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.piano-key.black {
+    width: 4%;
+    height: 60%;
+    background: linear-gradient(to bottom, #333333 0%, #000000 100%);
+    z-index: 2;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #000;
+}
+
+.piano-key.white.active {
+    background: linear-gradient(to bottom, #e0e0e0 0%, #d0d0d0 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.piano-key.black.active {
+    background: linear-gradient(to bottom, #000000 0%, #1a1a1a 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.key-label {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #666;
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none;
+    display: none; /* Hide all labels by default */
+}
+
+/* Only show C4 label */
+.piano-key[data-note="60"] .key-label {
+    display: block;
+}
+
+.piano-key.black .key-label {
+    color: #fff;
+}
+
+#midiStatus {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .material-selector select {
+        width: 100%;
+    }
+    
+    .build-button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .canvas-container {
+        height: 350px;
+    }
+    
+    #keyboard {
+        height: 120px;
+    }
+}

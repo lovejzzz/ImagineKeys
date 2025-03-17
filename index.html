@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagine Keys - Physical Modeling Keyboard Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Imagine Keys</h1>
+            <p>Build and play your custom keys</p>
+        </header>
+        
+        <main>
+            <div class="design-panel">
+                <div class="canvas-container">
+                    <canvas id="pianoCanvas"></canvas>
+                    <div class="dimensions-display">
+                        <div id="lengthDisplay">Length: <span>80</span>cm</div>
+                        <div id="widthDisplay">Width: <span>280</span>cm</div>
+                        <div id="heightDisplay">Height: <span>40</span>cm</div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <div class="material-selector">
+                        <label for="material">Material:</label>
+                        <select id="material">
+                            <option value="wood">Wood (Warm, resonant)</option>
+                            <option value="metal">Metal (Bright, clear)</option>
+                            <option value="glass">Glass (Crystalline, pure)</option>
+                            <option value="plastic">Plastic (Modern, balanced)</option>
+                        </select>
+                    </div>
+                    
+                    <button id="buildButton" class="build-button">Build</button>
+                </div>
+            </div>
+            
+            <div class="piano-container">
+                <div id="keyboard"></div>
+                <div id="midiStatus">MIDI: Not connected</div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Drag the edge points to adjust piano width and length, or the center point for height. Select a material and click "Build" to create your piano.</p>
+        </footer>
+    </div>
+    
+    <script src="piano-model.js"></script>
+    <script src="piano-ui.js"></script>
+    <script src="midi-controller.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
